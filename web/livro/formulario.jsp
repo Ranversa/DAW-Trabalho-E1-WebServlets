@@ -146,10 +146,9 @@
                value="<%= livroDao.getObjetoSelecionado().getDataCadastro()== null
                            ? "" : livroDao.getObjetoSelecionado().getDataCadastro()%>"/>
         <br/>Resumo:<br/>
-        <textarea rows="5" cols="50">
-            <%= livroDao.getObjetoSelecionado().getDataCadastro()== null
-                ? "" : livroDao.getObjetoSelecionado().getDataCadastro()%>
-        </textarea>
+        <input type="text" name="resumo"
+            value = "<%=livroDao.getObjetoSelecionado().getDataCadastro()== null
+                ? "" : livroDao.getObjetoSelecionado().getDataCadastro()%>" size="300"/>
         <br/>
         <input type="button" value="Salvar" name="btnSalvar" onclick="doSalvar()"/>
         <input type="button" value="Cancelar" name="btnCancelar" onclick="doCancelar()"/>

@@ -107,7 +107,7 @@ public class ServletLivro extends HttpServlet {
                 e.printStackTrace();
             }
             dao.getObjetoSelecionado().setDataPublicacao(dataPublicacao);
-            Calendar dataCadastro = null;
+            Calendar dataCadastro = Calendar.getInstance() ;
             try {
                 String data = request.getParameter("dataCadastro");
                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
