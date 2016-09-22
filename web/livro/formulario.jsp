@@ -1,3 +1,5 @@
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.Calendar"%>
 <%@page import="java.util.List"%>
 <%@page import="br.edu.ifsul.modelo.Autor"%>
 <%@page import="br.ifsul.edu.dao.AutorDAO"%>
@@ -41,29 +43,13 @@
             <br/>Titulo: <input type="text" name="titulo"
                                 value="<%= livroDao.getObjetoSelecionado().getTitulo() == null
                                         ? "" : livroDao.getObjetoSelecionado().getTitulo()%>" size="40"/> 
-            <br/>Autores:
-            <%
-                for (Autor a : autorDao.getLista()) {
-                    String checked = "";
-                    if (livroDao.getObjetoSelecionado().getAutorLivro() != null) {
-                        for (Autor al : livroDao.getObjetoSelecionado().getAutorLivro()) {
-                            if (a.getId().equals(al.getId())) {
-                                checked = "checked ";
-                            }
-                        }
-                    }
-            %>
-            <input type="checkbox" name="autores" value="<%=a.getId()%>" <%=checked%>><%=a.getNome()%><%
-            
-                }
-            %>
         </select>
         <br/>Editora: <input type="text" name="editora"
                              value="<%= livroDao.getObjetoSelecionado().getEditora() == null
-                                         ? "" : livroDao.getObjetoSelecionado().getEditora()%>" size="40"/>  
+                                     ? "" : livroDao.getObjetoSelecionado().getEditora()%>" size="40"/>  
         <br/>N paginas: <input type="text" name="numeroPaginas"
                                value="<%= livroDao.getObjetoSelecionado().getNumeroPaginas() == null
-                                           ? "" : livroDao.getObjetoSelecionado().getNumeroPaginas()%>" size="40"/> 
+                                       ? "" : livroDao.getObjetoSelecionado().getNumeroPaginas()%>" size="40"/> 
         <br/>Idioma:
         <select name="idIdioma" id="idIdioma">
             <%
@@ -74,8 +60,6 @@
                             selected = "selected ";
                         }
                     }
-
-
             %>
             <option value="<%=e.getId()%>" <%=selected%> ><%=e.getNome()%></option>
             <%
@@ -83,23 +67,34 @@
             %>
         </select>
         <br/>Data Publicação:
-        <input type="date" name="dataPublicacao"
+        <%
+            String dataP = "";
+            String dataC = "";
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            if (livroDao.getObjetoSelecionado().getDataPublicacao() != null) {
+                Calendar dp = livroDao.getObjetoSelecionado().getDataPublicacao();
+                dataP = sdf.format(dp.getTime());
+                Calendar dc = livroDao.getObjetoSelecionado().getDataCadastro();
+                dataC = sdf.format(dc.getTime());
+            }
+        %>
+        <input type="text" name="dataPublicacao" id="dataPublicacao"
                value="<%= livroDao.getObjetoSelecionado().getDataPublicacao() == null
-                           ? "" : livroDao.getObjetoSelecionado().getDataPublicacao()%>"/>
+                       ? "" : dataP%>"/>
         <br/>Ativo: 
         <input type="radio" name="ativo" value="true" 
                <%String checked = "false";
                    if (livroDao.getObjetoSelecionado().getAtivo() != null) {
                        if (livroDao.getObjetoSelecionado().getAtivo()) {
                            checked = "true";%>checked="<%=checked%>"<%
-                                       }
-                                   }%>  > Ativo
+                                   }
+                               }%>  > Ativo
         <input type="radio" name="ativo" value="false"
                <%if (livroDao.getObjetoSelecionado().getAtivo() != null) {
                        if (!livroDao.getObjetoSelecionado().getAtivo()) {
                            checked = "true";%>checked="<%=checked%>"<%
-                                       }
-                                   }%> > Desativado
+                                   }
+                               }%> > Desativado
         <br/>Formato:
         <select name="idFormato" id="idFormato">
             <%
@@ -116,12 +111,12 @@
                 }
             %>
         </select>
-        <br/>Valor: <input type="text" name="valor"
+        <br/>Valor: <input type="text" name="valor" id="valor"
                            value="<%= livroDao.getObjetoSelecionado().getValor() == null
-                                       ? "" : livroDao.getObjetoSelecionado().getValor()%>" size="12"/> 
+                                   ? "" : livroDao.getObjetoSelecionado().getValor()%>" size="12"/> 
         <br/>Codigo de Barras: <input type="text" name="codigoBarras"
                                       value="<%= livroDao.getObjetoSelecionado().getCodigoBarras() == null
-                                                  ? "" : livroDao.getObjetoSelecionado().getCodigoBarras()%>" size="20"/> 
+                                              ? "" : livroDao.getObjetoSelecionado().getCodigoBarras()%>" size="20"/> 
 
         <br/>Catalogo:
         <select name="idCatalogo" id="idCatalogo">
@@ -133,8 +128,6 @@
                             selected = "selected ";
                         }
                     }
-
-
             %>
             <option value="<%=c.getId()%>" <%=selected%> ><%=c.getNome()%></option>
             <%
@@ -142,13 +135,13 @@
             %>
         </select>
         <br/>Data Cadastro:
-        <input type="date" name="dataCadastro"
-               value="<%= livroDao.getObjetoSelecionado().getDataCadastro()== null
-                           ? "" : livroDao.getObjetoSelecionado().getDataCadastro()%>"/>
+        <input type="text" name="dataCadastro" id="dataCadastro"
+               value="<%= livroDao.getObjetoSelecionado().getDataCadastro() == null
+                       ? "" : dataC%>"/>
         <br/>Resumo:<br/>
-        <input type="text" name="resumo"
-            value = "<%=livroDao.getObjetoSelecionado().getDataCadastro()== null
-                ? "" : livroDao.getObjetoSelecionado().getDataCadastro()%>" size="300"/>
+        <input type="text" name="resumo" id="resumo"
+               value = "<%=livroDao.getObjetoSelecionado().getResumo() == null
+                       ? "" : livroDao.getObjetoSelecionado().getResumo()%>" size="200"/>
         <br/>
         <input type="button" value="Salvar" name="btnSalvar" onclick="doSalvar()"/>
         <input type="button" value="Cancelar" name="btnCancelar" onclick="doCancelar()"/>

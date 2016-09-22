@@ -118,14 +118,7 @@ public class ServletLivro extends HttpServlet {
             dao.getObjetoSelecionado().setDataCadastro(dataCadastro);
             
             // CAPTURANDO OS OBJETOS DAS CHAVES ESTRANGEIRAS
-            String[] idAutores = null;
-            String autores = request.getParameter("autores");
-            idAutores = autores.split(",");
-            Autor autor = new Autor();
-            for(int i =1; i<idAutores.length; i++){
-                autor = em.find(Autor.class, Integer.parseInt(idAutores[i]));
-                dao.getObjetoSelecionado().getAutorLivro().add(autor);
-            }
+            
             Integer idIdioma = null;
             try {
                 idIdioma = Integer.parseInt(request.getParameter("idIdioma"));

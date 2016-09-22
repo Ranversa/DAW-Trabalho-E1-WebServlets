@@ -24,7 +24,6 @@
                 <tr>
                     <th>ISBN</th>
                     <th>Titulo</th>
-                    <th>Autores</th>
                     <th>Editora</th>
                     <th>N Paginas</th>
                     <th>Idioma</th>
@@ -49,16 +48,12 @@
                     for (Livro l : livroDao.getLista()) {  // inicio do laço de repetição   
                         Calendar c = l.getDataPublicacao();
                         dataP = sdf.format(c.getTime());
-                        for(Autor a : l.getAutorLivro()){
-                            autores += a.getNome()+" ";
-                        }
                         Calendar cp = l.getDataCadastro();
                         dataC = sdf.format(cp.getTime());
                 %>
                 <tr>
                     <td><%=l.getISBN()%></td>
                     <td><%=l.getTitulo()%></td>
-                    <td><%=autores%></td>
                     <td><%=l.getEditora()%></td>
                     <td><%=l.getNumeroPaginas()%></td>
                     <td><%=l.getIdioma().getNome()%></td>
@@ -70,8 +65,8 @@
                     <th><%=l.getCatalogo().getNome()%></th>
                     <th><%=dataC%></th>
                     <th><%=l.getResumo()%></th>
-                    <td><a href="ServletLivro?acao=alterar&id=<%=l.getISBN()%>">Alterar</a></td>
-                    <td><a href="ServletLivro?acao=excluir&id=<%=l.getISBN()%>">Excluir</a></td>
+                    <td><a href="ServletLivro?acao=alterar&isbn=<%=l.getISBN()%>">Alterar</a></td>
+                    <td><a href="ServletLivro?acao=excluir&isbn=<%=l.getISBN()%>">Excluir</a></td>
                 </tr>
                 <%
                     } // fim do laço de repetição
